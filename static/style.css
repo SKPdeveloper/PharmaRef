@@ -1,4 +1,8 @@
 /* PharmaRef - Стилi застосунку */
+/* Кольорова гама: Twilight (фiолетово-рожевi тони) */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* Базовi стилi */
 *, *::before, *::after {
@@ -8,30 +12,52 @@
 }
 
 :root {
-    --color-primary: #2563eb;
-    --color-primary-dark: #1d4ed8;
-    --color-secondary: #64748b;
-    --color-success: #22c55e;
+    /* Twilight palette */
+    --color-primary: #7c3aed;          /* Фiолетовий */
+    --color-primary-dark: #6d28d9;
+    --color-primary-light: #a78bfa;
+    --color-secondary: #ec4899;         /* Рожевий */
+    --color-secondary-dark: #db2777;
+    --color-accent: #f472b6;            /* Свiтло-рожевий */
+
+    --color-success: #10b981;
     --color-warning: #f59e0b;
     --color-danger: #ef4444;
-    --color-info: #3b82f6;
+    --color-info: #6366f1;
 
-    --color-text: #1e293b;
-    --color-text-light: #64748b;
-    --color-bg: #f8fafc;
+    /* Темнi тони для тексту */
+    --color-text: #1f1f3d;              /* Темно-фiолетовий */
+    --color-text-light: #6b6b8a;
+    --color-text-muted: #9b9bb5;
+
+    /* Фони */
+    --color-bg: #faf5ff;                /* Свiтло-лавандовий */
     --color-bg-white: #ffffff;
-    --color-border: #e2e8f0;
+    --color-bg-card: #ffffff;
+    --color-bg-dark: #2d1b4e;           /* Темний twilight */
+    --color-border: #e9d5ff;            /* Лавандова рамка */
+    --color-border-light: #f3e8ff;
 
-    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    /* Градiєнти */
+    --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    --gradient-header: linear-gradient(135deg, #2d1b4e 0%, #4c1d95 100%);
+    --gradient-card: linear-gradient(180deg, #ffffff 0%, #faf5ff 100%);
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    /* Шрифти */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
 
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    /* Тiнi */
+    --shadow-sm: 0 1px 2px rgba(124, 58, 237, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(124, 58, 237, 0.1);
+    --shadow-lg: 0 10px 25px -3px rgba(124, 58, 237, 0.15);
+    --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.3);
+
+    /* Радiуси */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
 }
 
 body {
@@ -39,7 +65,7 @@ body {
     font-size: 16px;
     line-height: 1.6;
     color: var(--color-text);
-    background-color: var(--color-bg);
+    background: var(--color-bg);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -54,12 +80,12 @@ body {
 
 /* Хедер */
 .header {
-    background-color: var(--color-bg-white);
-    border-bottom: 1px solid var(--color-border);
+    background: var(--gradient-header);
     padding: 16px 0;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: var(--shadow-lg);
 }
 
 .header .container {
@@ -69,22 +95,33 @@ body {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-size: 24px;
     font-weight: 700;
-    color: var(--color-primary);
+    color: #ffffff;
     text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
 }
 
 .nav a {
-    color: var(--color-text);
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     padding: 8px 16px;
-    border-radius: var(--radius-sm);
-    transition: background-color 0.2s;
+    border-radius: var(--radius-md);
+    transition: all 0.2s;
+    font-weight: 500;
 }
 
 .nav a:hover {
-    background-color: var(--color-bg);
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
 }
 
 /* Основний контент */
@@ -95,25 +132,24 @@ body {
 
 /* Футер */
 .footer {
-    background-color: var(--color-bg-white);
-    border-top: 1px solid var(--color-border);
+    background: var(--gradient-header);
     padding: 24px 0;
     margin-top: auto;
 }
 
 .disclaimer {
-    background-color: #fef3c7;
-    border: 1px solid #f59e0b;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-md);
     padding: 16px;
     margin-bottom: 16px;
     font-size: 14px;
-    color: #92400e;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .copyright {
     font-size: 14px;
-    color: var(--color-text-light);
+    color: rgba(255, 255, 255, 0.7);
     text-align: center;
 }
 
@@ -123,10 +159,14 @@ body {
 }
 
 .title {
-    font-size: 36px;
+    font-size: 42px;
     font-weight: 700;
     margin-bottom: 12px;
-    color: var(--color-text);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
 }
 
 .subtitle {
@@ -148,7 +188,7 @@ body {
 .search-modes {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 12px;
     margin-bottom: 20px;
     flex-wrap: wrap;
 }
@@ -156,26 +196,34 @@ body {
 .mode-option {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     cursor: pointer;
-    padding: 8px 16px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
+    padding: 10px 20px;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-border);
     background-color: var(--color-bg-white);
     transition: all 0.2s;
+    font-weight: 500;
 }
 
 .mode-option:hover {
-    border-color: var(--color-primary);
+    border-color: var(--color-primary-light);
+    background-color: var(--color-border-light);
 }
 
 .mode-option input[type="radio"] {
     accent-color: var(--color-primary);
+    width: 18px;
+    height: 18px;
 }
 
 .mode-option input[type="radio"]:checked + span {
     color: var(--color-primary);
-    font-weight: 500;
+}
+
+.mode-option:has(input:checked) {
+    border-color: var(--color-primary);
+    background-color: #f5f3ff;
 }
 
 .search-input-wrapper {
@@ -185,17 +233,23 @@ body {
 
 .search-input {
     width: 100%;
-    padding: 16px 20px;
+    padding: 18px 24px;
     font-size: 18px;
+    font-family: var(--font-sans);
     border: 2px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.2s;
+    background-color: var(--color-bg-white);
 }
 
 .search-input:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: var(--shadow-glow);
+}
+
+.search-input::placeholder {
+    color: var(--color-text-muted);
 }
 
 .suggestions {
@@ -204,13 +258,14 @@ body {
     left: 0;
     right: 0;
     background-color: var(--color-bg-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     display: none;
     z-index: 50;
     max-height: 300px;
     overflow-y: auto;
+    margin-top: 4px;
 }
 
 .suggestions.active {
@@ -218,9 +273,10 @@ body {
 }
 
 .suggestion-item {
-    padding: 12px 16px;
+    padding: 14px 20px;
     cursor: pointer;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background-color 0.15s;
 }
 
 .suggestion-item:last-child {
@@ -228,23 +284,30 @@ body {
 }
 
 .suggestion-item:hover {
-    background-color: var(--color-bg);
+    background-color: var(--color-border-light);
 }
 
 .search-button {
-    padding: 16px 48px;
+    padding: 18px 56px;
     font-size: 18px;
     font-weight: 600;
+    font-family: var(--font-sans);
     color: white;
-    background-color: var(--color-primary);
+    background: var(--gradient-primary);
     border: none;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-md);
 }
 
 .search-button:hover {
-    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.search-button:active {
+    transform: translateY(0);
 }
 
 /* Iнформацiйнi картки */
@@ -256,33 +319,42 @@ body {
 }
 
 .info-card {
-    background-color: var(--color-bg-white);
+    background: var(--gradient-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: 24px;
+    padding: 28px;
     text-align: left;
+    transition: all 0.2s;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary-light);
 }
 
 .info-card h3 {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 12px;
-    color: var(--color-text);
+    color: var(--color-primary-dark);
 }
 
 .info-card p {
     font-size: 14px;
     color: var(--color-text-light);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    line-height: 1.6;
 }
 
 .info-card .example {
     font-family: var(--font-mono);
     font-size: 13px;
-    color: var(--color-secondary);
-    background-color: var(--color-bg);
-    padding: 8px 12px;
+    color: var(--color-primary);
+    background-color: var(--color-border-light);
+    padding: 10px 14px;
     border-radius: var(--radius-sm);
+    border-left: 3px solid var(--color-primary);
 }
 
 /* Сторiнка результатiв */
@@ -299,6 +371,7 @@ body {
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 8px;
+    color: var(--color-text);
 }
 
 .results-count {
@@ -318,18 +391,24 @@ body {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
+    transition: all 0.2s;
+}
+
+.drug-card:hover {
+    border-color: var(--color-primary-light);
+    box-shadow: var(--shadow-md);
 }
 
 .drug-header {
     display: flex;
     align-items: center;
-    padding: 16px 20px;
+    padding: 18px 24px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
 .drug-header:hover {
-    background-color: var(--color-bg);
+    background-color: var(--color-border-light);
 }
 
 .drug-title {
@@ -340,6 +419,7 @@ body {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 4px;
+    color: var(--color-text);
 }
 
 .drug-inn {
@@ -352,73 +432,83 @@ body {
     display: flex;
     gap: 8px;
     margin-right: 16px;
+    flex-wrap: wrap;
 }
 
 .expand-icon {
     font-size: 24px;
     font-weight: 300;
-    color: var(--color-text-light);
+    color: var(--color-primary-light);
     width: 24px;
     text-align: center;
+    transition: transform 0.2s;
+}
+
+.drug-card.open .expand-icon {
+    transform: rotate(45deg);
 }
 
 /* Бейджi */
 .badge {
-    display: inline-block;
-    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     border-radius: 9999px;
     white-space: nowrap;
+    letter-spacing: 0.3px;
 }
 
 .badge--red {
     background-color: #fee2e2;
-    color: #991b1b;
+    color: #dc2626;
 }
 
 .badge--orange {
     background-color: #ffedd5;
-    color: #9a3412;
+    color: #ea580c;
 }
 
 .badge--yellow {
     background-color: #fef3c7;
-    color: #92400e;
+    color: #d97706;
 }
 
 .badge--green {
     background-color: #dcfce7;
-    color: #166534;
+    color: #16a34a;
 }
 
 .badge--blue {
     background-color: #dbeafe;
-    color: #1e40af;
+    color: #2563eb;
 }
 
 .badge--purple {
     background-color: #f3e8ff;
-    color: #6b21a8;
+    color: var(--color-primary);
 }
 
 .badge--gray {
     background-color: #f1f5f9;
-    color: #475569;
+    color: #64748b;
 }
 
 .badge--source {
     font-family: var(--font-mono);
     font-size: 11px;
+    font-weight: 500;
 }
 
 .badge--ua {
-    background-color: #fef08a;
+    background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
     color: #854d0e;
 }
 
 .badge--fda {
-    background-color: #bfdbfe;
+    background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
     color: #1e40af;
 }
 
@@ -428,6 +518,7 @@ body {
     overflow: hidden;
     transition: max-height 0.3s ease-out;
     border-top: 1px solid var(--color-border);
+    background-color: var(--color-border-light);
 }
 
 .drug-details.open {
@@ -436,53 +527,65 @@ body {
 
 .details-table {
     width: 100%;
-    padding: 16px 20px;
+    padding: 20px 24px;
 }
 
 .details-table th {
     text-align: left;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--color-text-light);
-    padding: 8px 16px 8px 0;
+    padding: 10px 16px 10px 0;
     vertical-align: top;
     width: 140px;
+    font-size: 14px;
 }
 
 .details-table td {
-    padding: 8px 0;
+    padding: 10px 0;
+    color: var(--color-text);
 }
 
 .indications-text {
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .drug-actions {
-    padding: 0 20px 16px;
+    padding: 0 24px 20px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .action-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: var(--color-primary);
     text-decoration: none;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-border-light);
+    transition: all 0.2s;
 }
 
 .action-link:hover {
-    text-decoration: underline;
+    background-color: var(--color-primary);
+    color: white;
 }
 
 /* Повiдомлення */
 .alert {
-    padding: 16px 20px;
-    border-radius: var(--radius-md);
+    padding: 18px 24px;
+    border-radius: var(--radius-lg);
     margin-bottom: 20px;
 }
 
 .alert--error {
     background-color: #fee2e2;
-    color: #991b1b;
+    color: #dc2626;
     border: 1px solid #fecaca;
 }
 
@@ -509,26 +612,26 @@ body {
 
 /* Пропозицiя виправлення */
 .alert--suggestion {
-    background-color: #dbeafe;
-    color: #1e40af;
-    border: 1px solid #93c5fd;
+    background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+    color: var(--color-primary-dark);
+    border: 1px solid var(--color-primary-light);
 }
 
 .suggestion-link {
     display: inline-block;
     margin-left: 8px;
-    color: #1d4ed8;
-    font-weight: 600;
+    color: var(--color-primary);
+    font-weight: 700;
     text-decoration: underline;
 }
 
 .suggestion-link:hover {
-    color: #1e3a8a;
+    color: var(--color-primary-dark);
 }
 
 .suggestion-confidence {
     font-size: 13px;
-    color: #3b82f6;
+    color: var(--color-primary-light);
     margin-left: 8px;
 }
 
@@ -536,7 +639,7 @@ body {
 .alert--warning {
     background-color: #fef3c7;
     color: #92400e;
-    border: 2px solid #f59e0b;
+    border: 2px solid #fbbf24;
 }
 
 .warning-list {
@@ -557,7 +660,7 @@ body {
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid #fbbf24;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 /* Теги варiантiв транслiтерацiї */
@@ -569,58 +672,60 @@ body {
 
 .variant-tag {
     display: inline-block;
-    background-color: #e0e7ff;
-    color: #3730a3;
-    padding: 2px 8px;
-    border-radius: 4px;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    color: var(--color-primary-dark);
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
     font-size: 12px;
     margin: 0 4px;
     font-family: var(--font-mono);
+    font-weight: 500;
 }
 
 /* AI аналiз */
 .ai-analysis {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    border: 1px solid #7dd3fc;
+    background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+    border: 2px solid var(--color-primary-light);
     border-radius: var(--radius-lg);
-    padding: 20px;
+    padding: 24px;
     margin-bottom: 24px;
 }
 
 .ai-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
 .ai-badge {
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    background: var(--gradient-primary);
     color: white;
-    padding: 4px 10px;
-    border-radius: 6px;
+    padding: 6px 14px;
+    border-radius: var(--radius-md);
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .ai-title {
-    font-weight: 600;
-    color: #1e40af;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    font-size: 16px;
 }
 
 .ai-summary {
     font-size: 15px;
     color: var(--color-text);
     margin-bottom: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .ai-section {
     margin-bottom: 12px;
-    padding: 12px;
-    border-radius: var(--radius-sm);
+    padding: 14px;
+    border-radius: var(--radius-md);
 }
 
 .ai-section:last-child {
@@ -640,12 +745,13 @@ body {
 
 .ai-section li {
     font-size: 14px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    line-height: 1.5;
 }
 
 .ai-warnings {
     background-color: #fef3c7;
-    border-left: 3px solid #f59e0b;
+    border-left: 4px solid #f59e0b;
 }
 
 .ai-warnings strong {
@@ -654,7 +760,7 @@ body {
 
 .ai-interactions {
     background-color: #fce7f3;
-    border-left: 3px solid #ec4899;
+    border-left: 4px solid var(--color-secondary);
 }
 
 .ai-interactions strong {
@@ -663,7 +769,7 @@ body {
 
 .ai-recommendations {
     background-color: #dcfce7;
-    border-left: 3px solid #22c55e;
+    border-left: 4px solid #22c55e;
 }
 
 .ai-recommendations strong {
@@ -679,9 +785,10 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(45, 27, 78, 0.6);
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(4px);
 }
 
 .modal.open {
@@ -690,8 +797,8 @@ body {
 
 .modal-content {
     background-color: var(--color-bg-white);
-    border-radius: var(--radius-lg);
-    padding: 24px;
+    border-radius: var(--radius-xl);
+    padding: 28px;
     max-width: 500px;
     width: 90%;
     max-height: 80vh;
@@ -702,22 +809,24 @@ body {
 
 .modal-close {
     position: absolute;
-    right: 16px;
-    top: 12px;
+    right: 20px;
+    top: 16px;
     font-size: 28px;
     font-weight: 300;
     color: var(--color-text-light);
     cursor: pointer;
     line-height: 1;
+    transition: color 0.2s;
 }
 
 .modal-close:hover {
-    color: var(--color-text);
+    color: var(--color-primary);
 }
 
 .modal-content h3 {
     margin-bottom: 16px;
     padding-right: 30px;
+    color: var(--color-primary-dark);
 }
 
 .similar-drugs-list {
@@ -726,7 +835,7 @@ body {
 }
 
 .similar-drugs-list li {
-    padding: 12px 0;
+    padding: 14px 0;
     border-bottom: 1px solid var(--color-border);
 }
 
@@ -737,7 +846,7 @@ body {
 .similar-drugs-list a {
     color: var(--color-primary);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .similar-drugs-list a:hover {
@@ -746,35 +855,28 @@ body {
 
 .similarity-badge {
     display: inline-block;
-    background-color: #fef3c7;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
     color: #92400e;
-    padding: 2px 8px;
-    border-radius: 4px;
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
     font-size: 12px;
     margin-left: 8px;
+    font-weight: 600;
 }
 
 .modal-warning {
     margin-top: 16px;
-    padding: 12px;
+    padding: 14px;
     background-color: #fef3c7;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     font-size: 14px;
     color: #92400e;
-}
-
-/* Дiї з препаратом */
-.drug-actions {
-    padding: 0 20px 16px;
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
 }
 
 /* Адаптивнiсть */
 @media (max-width: 768px) {
     .title {
-        font-size: 28px;
+        font-size: 32px;
     }
 
     .subtitle {
@@ -782,13 +884,13 @@ body {
     }
 
     .search-input {
-        padding: 14px 16px;
+        padding: 16px 20px;
         font-size: 16px;
     }
 
     .search-button {
         width: 100%;
-        padding: 14px;
+        padding: 16px;
     }
 
     .search-modes {
@@ -796,17 +898,18 @@ body {
     }
 
     .mode-option {
-        padding: 6px 12px;
+        padding: 8px 14px;
         font-size: 14px;
     }
 
     .drug-header {
         flex-wrap: wrap;
+        padding: 16px 20px;
     }
 
     .drug-badges {
         width: 100%;
-        margin-top: 8px;
+        margin-top: 10px;
         margin-right: 0;
     }
 
@@ -824,6 +927,14 @@ body {
 
     .details-table td {
         display: block;
-        padding-bottom: 12px;
+        padding-bottom: 14px;
+    }
+
+    .info-cards {
+        gap: 16px;
+    }
+
+    .info-card {
+        padding: 20px;
     }
 }

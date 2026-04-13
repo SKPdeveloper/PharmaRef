@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}PharmaRef{% endblock %} - Довiдник лiкарських засобiв</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     {% block head %}{% endblock %}
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="{{ url_for('search.index') }}" class="logo">PharmaRef</a>
+            <a href="{{ url_for('search.index') }}" class="logo">
+                <img src="{{ url_for('static', filename='logo.svg') }}" alt="PharmaRef" class="logo-icon">
+                <span>PharmaRef</span>
+            </a>
             <nav class="nav">
                 <a href="{{ url_for('search.index') }}">Пошук</a>
             </nav>
