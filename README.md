@@ -2,6 +2,8 @@
 
 Довiдник лiкарських засобiв України з AI-аналiзом (Groq, OpenRouter, Gemini).
 
+**[Повна документацiя](docs/GUIDE.md)** | [API Reference](docs/GUIDE.md#api-reference) | [Troubleshooting](docs/GUIDE.md#troubleshooting)
+
 ## Можливостi
 
 - Пошук за назвою препарату (торгова назва + МНН)
