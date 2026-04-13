@@ -1,0 +1,83 @@
+{
+  "description": "DEA Controlled Substances Schedules (USA)",
+  "source": "Drug Enforcement Administration",
+  "schedules": {
+    "I": {
+      "name": "Schedule I - No accepted medical use, high abuse potential",
+      "substances": [
+        "Heroin",
+        "LSD",
+        "Marijuana",
+        "MDMA",
+        "Peyote",
+        "Ecstasy",
+        "Psilocybin",
+        "Mescaline",
+        "GHB",
+        "Bath salts"
+      ]
+    },
+    "II": {
+      "name": "Schedule II - High abuse potential, severe dependence",
+      "substances": [
+        "Cocaine",
+        "Methamphetamine",
+        "Methadone",
+        "Oxycodone",
+        "Fentanyl",
+        "Adderall",
+        "Ritalin",
+        "Vicodin",
+        "Dilaudid",
+        "Demerol",
+        "OxyContin",
+        "Percocet",
+        "Morphine",
+        "Opium",
+        "Codeine",
+        "Hydrocodone",
+        "Amphetamine"
+      ]
+    },
+    "III": {
+      "name": "Schedule III - Moderate abuse potential",
+      "substances": [
+        "Tylenol with Codeine",
+        "Ketamine",
+        "Anabolic steroids",
+        "Testosterone",
+        "Buprenorphine",
+        "Suboxone"
+      ]
+    },
+    "IV": {
+      "name": "Schedule IV - Low abuse potential",
+      "substances": [
+        "Xanax",
+        "Soma",
+        "Valium",
+        "Ativan",
+        "Talwin",
+        "Ambien",
+        "Tramadol",
+        "Alprazolam",
+        "Diazepam",
+        "Lorazepam",
+        "Clonazepam",
+        "Zolpidem",
+        "Modafinil"
+      ]
+    },
+    "V": {
+      "name": "Schedule V - Lowest abuse potential",
+      "substances": [
+        "Robitussin AC",
+        "Lomotil",
+        "Motofen",
+        "Lyrica",
+        "Parepectolin",
+        "Pregabalin"
+      ]
+    }
+  }
+}

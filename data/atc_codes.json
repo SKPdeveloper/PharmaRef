@@ -1,0 +1,271 @@
+{
+  "description": "ATC класифiкатор з маппiнгом на захворювання",
+  "source": "WHO Collaborating Centre for Drug Statistics Methodology",
+  "codes": {
+    "A": {
+      "name_en": "Alimentary tract and metabolism",
+      "name_uk": "Травний тракт та метаболiзм",
+      "groups": {
+        "A02": {"name_uk": "Антацидні засоби", "name_en": "Drugs for acid related disorders"},
+        "A10": {"name_uk": "Антидіабетичні засоби", "name_en": "Drugs used in diabetes"}
+      }
+    },
+    "B": {
+      "name_en": "Blood and blood forming organs",
+      "name_uk": "Кров та кровотворнi органи",
+      "groups": {
+        "B01": {"name_uk": "Антитромботичні засоби", "name_en": "Antithrombotic agents"},
+        "B03": {"name_uk": "Антианемічні засоби", "name_en": "Antianemic preparations"}
+      }
+    },
+    "C": {
+      "name_en": "Cardiovascular system",
+      "name_uk": "Серцево-судинна система",
+      "groups": {
+        "C01": {"name_uk": "Серцеві засоби", "name_en": "Cardiac therapy"},
+        "C02": {"name_uk": "Антигіпертензивні засоби", "name_en": "Antihypertensives"},
+        "C03": {"name_uk": "Діуретики", "name_en": "Diuretics"},
+        "C07": {"name_uk": "Бета-блокатори", "name_en": "Beta blocking agents"},
+        "C08": {"name_uk": "Блокатори кальцієвих каналів", "name_en": "Calcium channel blockers"},
+        "C09": {"name_uk": "Інгібітори АПФ", "name_en": "Agents acting on renin-angiotensin system"},
+        "C10": {"name_uk": "Гіполіпідемічні засоби", "name_en": "Lipid modifying agents"}
+      }
+    },
+    "D": {
+      "name_en": "Dermatologicals",
+      "name_uk": "Дерматологiчнi засоби",
+      "groups": {
+        "D01": {"name_uk": "Протигрибкові засоби", "name_en": "Antifungals for dermatological use"},
+        "D07": {"name_uk": "Кортикостероїди для місцевого застосування", "name_en": "Corticosteroids, dermatological preparations"}
+      }
+    },
+    "G": {
+      "name_en": "Genito-urinary system and sex hormones",
+      "name_uk": "Сечостатева система та статевi гормони",
+      "groups": {
+        "G03": {"name_uk": "Гормональні контрацептиви", "name_en": "Sex hormones and modulators"},
+        "G04": {"name_uk": "Урологічні засоби", "name_en": "Urologicals"}
+      }
+    },
+    "H": {
+      "name_en": "Systemic hormonal preparations",
+      "name_uk": "Гормональнi препарати",
+      "groups": {
+        "H02": {"name_uk": "Кортикостероїди", "name_en": "Corticosteroids for systemic use"},
+        "H03": {"name_uk": "Препарати щитовидної залози", "name_en": "Thyroid therapy"}
+      }
+    },
+    "J": {
+      "name_en": "Antiinfectives for systemic use",
+      "name_uk": "Протимiкробнi засоби",
+      "groups": {
+        "J01": {"name_uk": "Антибіотики", "name_en": "Antibacterials for systemic use"},
+        "J02": {"name_uk": "Протигрибкові засоби", "name_en": "Antimycotics for systemic use"},
+        "J05": {"name_uk": "Противірусні засоби", "name_en": "Antivirals for systemic use"}
+      }
+    },
+    "L": {
+      "name_en": "Antineoplastic and immunomodulating agents",
+      "name_uk": "Протипухлиннi та iмуномодулюючi засоби",
+      "groups": {
+        "L01": {"name_uk": "Протипухлинні засоби", "name_en": "Antineoplastic agents"},
+        "L03": {"name_uk": "Імуностимулятори", "name_en": "Immunostimulants"},
+        "L04": {"name_uk": "Імуносупресанти", "name_en": "Immunosuppressants"}
+      }
+    },
+    "M": {
+      "name_en": "Musculo-skeletal system",
+      "name_uk": "Кiстково-м'язова система",
+      "groups": {
+        "M01": {"name_uk": "Протизапальні та протиревматичні засоби", "name_en": "Antiinflammatory and antirheumatic products"},
+        "M03": {"name_uk": "Міорелаксанти", "name_en": "Muscle relaxants"},
+        "M05": {"name_uk": "Засоби для лікування остеопорозу", "name_en": "Drugs for treatment of bone diseases"}
+      }
+    },
+    "N": {
+      "name_en": "Nervous system",
+      "name_uk": "Нервова система",
+      "groups": {
+        "N02": {"name_uk": "Аналгетики", "name_en": "Analgesics"},
+        "N03": {"name_uk": "Протиепілептичні засоби", "name_en": "Antiepileptics"},
+        "N05": {"name_uk": "Психолептики", "name_en": "Psycholeptics"},
+        "N06": {"name_uk": "Психоаналептики", "name_en": "Psychoanaleptics"},
+        "N07": {"name_uk": "Інші засоби для нервової системи", "name_en": "Other nervous system drugs"}
+      }
+    },
+    "P": {
+      "name_en": "Antiparasitic products",
+      "name_uk": "Протипаразитарнi засоби",
+      "groups": {
+        "P01": {"name_uk": "Протипротозойні засоби", "name_en": "Antiprotozoals"},
+        "P02": {"name_uk": "Антигельмінтні засоби", "name_en": "Anthelmintics"}
+      }
+    },
+    "R": {
+      "name_en": "Respiratory system",
+      "name_uk": "Дихальна система",
+      "groups": {
+        "R01": {"name_uk": "Назальні засоби", "name_en": "Nasal preparations"},
+        "R03": {"name_uk": "Засоби для лікування обструктивних захворювань", "name_en": "Drugs for obstructive airway diseases"},
+        "R05": {"name_uk": "Протикашльові засоби", "name_en": "Cough and cold preparations"},
+        "R06": {"name_uk": "Антигістамінні засоби", "name_en": "Antihistamines for systemic use"}
+      }
+    },
+    "S": {
+      "name_en": "Sensory organs",
+      "name_uk": "Органи чуття",
+      "groups": {
+        "S01": {"name_uk": "Офтальмологічні засоби", "name_en": "Ophthalmologicals"},
+        "S02": {"name_uk": "Отологічні засоби", "name_en": "Otologicals"}
+      }
+    },
+    "V": {
+      "name_en": "Various",
+      "name_uk": "Iншi",
+      "groups": {
+        "V03": {"name_uk": "Інші терапевтичні засоби", "name_en": "All other therapeutic products"}
+      }
+    }
+  },
+  "disease_mappings": {
+    "гіпертонія": ["C02", "C03", "C07", "C08", "C09"],
+    "гипертония": ["C02", "C03", "C07", "C08", "C09"],
+    "hypertension": ["C02", "C03", "C07", "C08", "C09"],
+    "тиск": ["C02", "C03", "C07", "C08", "C09"],
+    "давление": ["C02", "C03", "C07", "C08", "C09"],
+    "діабет": ["A10"],
+    "диабет": ["A10"],
+    "diabetes": ["A10"],
+    "цукор": ["A10"],
+    "сахар": ["A10"],
+    "біль": ["N02", "M01"],
+    "боль": ["N02", "M01"],
+    "pain": ["N02", "M01"],
+    "головний біль": ["N02"],
+    "головная боль": ["N02"],
+    "headache": ["N02"],
+    "мігрень": ["N02"],
+    "мигрень": ["N02"],
+    "депресія": ["N06"],
+    "депрессия": ["N06"],
+    "depression": ["N06"],
+    "тривожність": ["N05"],
+    "тревожность": ["N05"],
+    "anxiety": ["N05"],
+    "інфекція": ["J01", "J02", "J05"],
+    "инфекция": ["J01", "J02", "J05"],
+    "infection": ["J01", "J02", "J05"],
+    "грип": ["J05", "R05", "R06"],
+    "грипп": ["J05", "R05", "R06"],
+    "flu": ["J05", "R05", "R06"],
+    "influenza": ["J05", "R05", "R06"],
+    "орві": ["R05", "R06", "J05"],
+    "орви": ["R05", "R06", "J05"],
+    "простуда": ["R05", "R06"],
+    "кашель": ["R05"],
+    "cough": ["R05"],
+    "застуда": ["R05", "R06"],
+    "cold": ["R05", "R06"],
+    "нежить": ["R01", "R06"],
+    "насморк": ["R01", "R06"],
+    "ангіна": ["J01", "R02"],
+    "ангина": ["J01", "R02"],
+    "температура": ["N02", "M01"],
+    "жар": ["N02", "M01"],
+    "лихоманка": ["N02", "M01"],
+    "лихорадка": ["N02", "M01"],
+    "fever": ["N02", "M01"],
+    "алергія": ["R06"],
+    "аллергия": ["R06"],
+    "allergy": ["R06"],
+    "астма": ["R03"],
+    "asthma": ["R03"],
+    "бронхіт": ["R05", "J01"],
+    "бронхит": ["R05", "J01"],
+    "bronchitis": ["R05", "J01"],
+    "пневмонія": ["J01"],
+    "пневмония": ["J01"],
+    "pneumonia": ["J01"],
+    "артрит": ["M01"],
+    "arthritis": ["M01"],
+    "серце": ["C01"],
+    "сердце": ["C01"],
+    "heart": ["C01"],
+    "аритмія": ["C01"],
+    "аритмия": ["C01"],
+    "холестерин": ["C10"],
+    "cholesterol": ["C10"],
+    "шлунок": ["A02"],
+    "желудок": ["A02"],
+    "stomach": ["A02"],
+    "гастрит": ["A02"],
+    "виразка": ["A02"],
+    "язва": ["A02"],
+    "ulcer": ["A02"],
+    "печінка": ["A05"],
+    "печень": ["A05"],
+    "liver": ["A05"],
+    "нирки": ["C03", "G04"],
+    "почки": ["C03", "G04"],
+    "kidney": ["C03", "G04"],
+    "грибок": ["D01", "J02"],
+    "fungal": ["D01", "J02"],
+    "мікоз": ["D01", "J02"],
+    "микоз": ["D01", "J02"],
+    "епілепсія": ["N03"],
+    "эпилепсия": ["N03"],
+    "epilepsy": ["N03"],
+    "судоми": ["N03"],
+    "судороги": ["N03"],
+    "щитовидна": ["H03"],
+    "щитовидка": ["H03"],
+    "thyroid": ["H03"],
+    "остеопороз": ["M05"],
+    "osteoporosis": ["M05"],
+    "анемія": ["B03"],
+    "анемия": ["B03"],
+    "anemia": ["B03"],
+    "тромбоз": ["B01"],
+    "тромб": ["B01"],
+    "thrombosis": ["B01"],
+    "рак": ["L01"],
+    "онкологія": ["L01"],
+    "онкология": ["L01"],
+    "cancer": ["L01"],
+    "імунітет": ["L03", "L04"],
+    "иммунитет": ["L03", "L04"],
+    "immunity": ["L03", "L04"],
+    "чума": ["J01"],
+    "plague": ["J01"],
+    "холера": ["A07", "J01"],
+    "cholera": ["A07", "J01"],
+    "дизентерія": ["A07", "J01"],
+    "дизентерия": ["A07", "J01"],
+    "dysentery": ["A07", "J01"],
+    "діарея": ["A07"],
+    "диарея": ["A07"],
+    "понос": ["A07"],
+    "diarrhea": ["A07"],
+    "запор": ["A06"],
+    "constipation": ["A06"],
+    "нудота": ["A04"],
+    "тошнота": ["A04"],
+    "nausea": ["A04"],
+    "блювота": ["A04"],
+    "рвота": ["A04"],
+    "безсоння": ["N05"],
+    "бессонница": ["N05"],
+    "insomnia": ["N05"],
+    "сон": ["N05"],
+    "герпес": ["J05", "D06"],
+    "herpes": ["J05", "D06"],
+    "вірус": ["J05"],
+    "вирус": ["J05"],
+    "virus": ["J05"],
+    "covid": ["J05"],
+    "ковід": ["J05"],
+    "ковид": ["J05"],
+    "коронавірус": ["J05"],
+    "коронавирус": ["J05"]
+  }
+}

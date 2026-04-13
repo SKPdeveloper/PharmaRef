@@ -1,0 +1,56 @@
+{
+  "description": "Контрольованi речовини за КМУ №770/2000",
+  "source": "Постанова КМУ №770 вiд 06.05.2000",
+  "tables": {
+    "1": {
+      "name": "Таблиця I - Особливо небезпечнi наркотичнi засоби",
+      "level": "forbidden",
+      "substances": [
+        {"name": "Героїн", "name_en": "Heroin", "list": 1},
+        {"name": "Канабiс", "name_en": "Cannabis", "list": 1},
+        {"name": "Кокаїновий кущ", "name_en": "Coca bush", "list": 1},
+        {"name": "ЛСД", "name_en": "LSD", "list": 1},
+        {"name": "Мескалiн", "name_en": "Mescaline", "list": 1},
+        {"name": "Метадон", "name_en": "Methadone", "list": 1},
+        {"name": "МДМА", "name_en": "MDMA", "list": 1},
+        {"name": "Опiй", "name_en": "Opium", "list": 1},
+        {"name": "Псилоцибiн", "name_en": "Psilocybin", "list": 1},
+        {"name": "Фенциклiдин", "name_en": "Phencyclidine", "list": 1},
+        {"name": "Амфетамiн", "name_en": "Amphetamine", "list": 2},
+        {"name": "Метамфетамiн", "name_en": "Methamphetamine", "list": 2},
+        {"name": "Фентанiл", "name_en": "Fentanyl", "list": 2}
+      ]
+    },
+    "2": {
+      "name": "Таблиця II - Особливо небезпечнi психотропнi речовини",
+      "level": "restricted",
+      "substances": [
+        {"name": "Барбiтал", "name_en": "Barbital", "list": 1},
+        {"name": "Дiазепам", "name_en": "Diazepam", "list": 1},
+        {"name": "Клоназепам", "name_en": "Clonazepam", "list": 1},
+        {"name": "Лоразепам", "name_en": "Lorazepam", "list": 1},
+        {"name": "Морфiн", "name_en": "Morphine", "list": 1},
+        {"name": "Оксикодон", "name_en": "Oxycodone", "list": 1},
+        {"name": "Пентобарбiтал", "name_en": "Pentobarbital", "list": 1},
+        {"name": "Фенобарбiтал", "name_en": "Phenobarbital", "list": 1},
+        {"name": "Кодеїн", "name_en": "Codeine", "list": 2},
+        {"name": "Трамадол", "name_en": "Tramadol", "list": 2}
+      ]
+    },
+    "3": {
+      "name": "Таблиця III - Прекурсори",
+      "level": "precursor",
+      "substances": [
+        {"name": "Ацетон", "name_en": "Acetone", "list": 1},
+        {"name": "Ефедрин", "name_en": "Ephedrine", "list": 1},
+        {"name": "Ергометрин", "name_en": "Ergometrine", "list": 1},
+        {"name": "Ерготамiн", "name_en": "Ergotamine", "list": 1},
+        {"name": "Лiзергiнова кислота", "name_en": "Lysergic acid", "list": 1},
+        {"name": "Псевдоефедрин", "name_en": "Pseudoephedrine", "list": 1},
+        {"name": "Сафрол", "name_en": "Safrole", "list": 1},
+        {"name": "Пiперидин", "name_en": "Piperidine", "list": 2},
+        {"name": "Антранiлова кислота", "name_en": "Anthranilic acid", "list": 2}
+      ]
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Пошук лiкiв{% endblock %}
+
+{% block content %}
+<div class="search-page">
+    <h1 class="title">Довiдник лiкарських засобiв</h1>
+    <p class="subtitle">Пошук по Державному реєстру лiкарських засобiв України та базi FDA</p>
+
+    <form action="{{ url_for('search.search') }}" method="get" class="search-form">
+        <div class="search-modes">
+            <label class="mode-option">
+                <input type="radio" name="mode" value="name" checked>
+                <span>За назвою</span>
+            </label>
+            <label class="mode-option">
+                <input type="radio" name="mode" value="disease">
+                <span>За захворюванням</span>
+            </label>
+            <label class="mode-option">
+                <input type="radio" name="mode" value="ingredient">
+                <span>За дiючою речовиною</span>
+            </label>
+        </div>
+
+        <div class="search-input-wrapper">
+            <input
+                type="text"
+                name="q"
+                id="search-input"
+                class="search-input"
+                placeholder="Введiть назву препарату, захворювання або дiючу речовину..."
+                autocomplete="off"
+                minlength="3"
+                required
+            >
+            <div id="suggestions" class="suggestions"></div>
+        </div>
+
+        <button type="submit" class="search-button">Шукати</button>
+    </form>
+
+    <div class="info-cards">
+        <div class="info-card">
+            <h3>Пошук за назвою</h3>
+            <p>Знайдiть препарат за торговою назвою або МНН (мiжнародною непатентованою назвою).</p>
+            <p class="example">Приклад: Аспiрин, Iбупрофен, Парацетамол</p>
+        </div>
+        <div class="info-card">
+            <h3>Пошук за захворюванням</h3>
+            <p>Знайдiть лiки для лiкування конкретного захворювання або симптому.</p>
+            <p class="example">Приклад: гiпертонiя, дiабет, головний бiль</p>
+        </div>
+        <div class="info-card">
+            <h3>Пошук за речовиною</h3>
+            <p>Знайдiть всi препарати з певною дiючою речовиною (аналоги).</p>
+            <p class="example">Приклад: метформiн, амлодипiн, омепразол</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

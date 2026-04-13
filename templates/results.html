@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block title %}{{ query }} - Результати пошуку{% endblock %}
+
+{% block content %}
+<div class="results-page">
+    <form action="{{ url_for('search.search') }}" method="get" class="search-form search-form--compact">
+        <div class="search-modes">
+            <label class="mode-option">
+                <input type="radio" name="mode" value="name" {{ 'checked' if mode == 'name' else '' }}>
+                <span>За назвою</span>
+            </label>
+            <label class="mode-option">
+                <input type="radio" name="mode" value="disease" {{ 'checked' if mode == 'disease' else '' }}>
+                <span>За захворюванням</span>
+            </label>
+            <label class="mode-option">
+                <input type="radio" name="mode" value="ingredient" {{ 'checked' if mode == 'ingredient' else '' }}>
+                <span>За дiючою речовиною</span>
+            </label>
+        </div>
+
+        <div class="search-input-wrapper">
+            <input
+                type="text"
+                name="q"
+                id="search-input"
+                class="search-input"
+                value="{{ query }}"
+                placeholder="Пошук..."
+                autocomplete="off"
+                minlength="3"
+                required
+            >
+            <div id="suggestions" class="suggestions"></div>
+        </div>
+
+        <button type="submit" class="search-button">Шукати</button>
+    </form>
+
+    {% if error %}
+    <div class="alert alert--error">{{ error }}</div>
+    {% endif %}
+
+    {# Пропозицiя виправлення #}
+    {% if suggestion %}
+    <div class="alert alert--suggestion">
+        <strong>{{ suggestion.message }}</strong>
+        <a href="{{ url_for('search.search', q=suggestion.suggestion, mode=mode) }}" class="suggestion-link">
+            Шукати "{{ suggestion.suggestion }}"
+        </a>
+        <span class="suggestion-confidence">(впевненiсть: {{ suggestion.confidence }}%)</span>
+    </div>
+    {% endif %}
+
+    {# Попередження про схожi назви #}
+    {% if warnings %}
+    <div class="alert alert--warning">
+        <strong>Увага! Iснують препарати зi схожими назвами:</strong>
+        <ul class="warning-list">
+            {% for warning in warnings %}
+            <li>
+                <strong>{{ warning.similar_name }}</strong>
+                (схожiсть: {{ warning.similarity }}%)
+                {% if warning.difference %}
+                <span class="warning-diff">- {{ warning.difference }}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        <p class="warning-note">
+            Переконайтесь, що ви шукаєте саме той препарат, який вам потрiбен.
+            Одна буква може означати зовсiм iнший препарат!
+        </p>
+    </div>
+    {% endif %}
+
+    {# AI аналiз результатiв #}
+    {% if ai_analysis %}
+    <div class="ai-analysis">
+        <div class="ai-header">
+            <span class="ai-badge">AI</span>
+            <span class="ai-title">Аналiз Gemini</span>
+        </div>
+
+        {% if ai_analysis.summary %}
+        <p class="ai-summary">{{ ai_analysis.summary }}</p>
+        {% endif %}
+
+        {% if ai_analysis.warnings %}
+        <div class="ai-section ai-warnings">
+            <strong>Попередження:</strong>
+            <ul>
+                {% for w in ai_analysis.warnings %}
+                <li>{{ w }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if ai_analysis.interactions %}
+        <div class="ai-section ai-interactions">
+            <strong>Можливi взаємодiї:</strong>
+            <ul>
+                {% for i in ai_analysis.interactions %}
+                <li>{{ i }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if ai_analysis.recommendations %}
+        <div class="ai-section ai-recommendations">
+            <strong>Рекомендацiї:</strong>
+            <ul>
+                {% for r in ai_analysis.recommendations %}
+                <li>{{ r }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if query and not error %}
+    <div class="results-header">
+        <h2>Результати пошуку {{ mode_name }}</h2>
+        <p class="results-count">Знайдено: {{ count }} результат(iв) для "{{ query }}"</p>
+
+        {# Показуємо використанi варiанти транслiтерацiї #}
+        {% if variants_used and variants_used|length > 1 %}
+        <p class="variants-info">
+            Також шукали:
+            {% for variant in variants_used %}
+                {% if variant != query|lower %}
+                <span class="variant-tag">{{ variant }}</span>
+                {% endif %}
+            {% endfor %}
+        </p>
+        {% endif %}
+    </div>
+
+    {% if results %}
+    <div class="results-list">
+        {% for drug in results %}
+        <div class="drug-card">
+            <div class="drug-header" onclick="toggleDrugDetails(this)">
+                <div class="drug-title">
+                    <h3 class="drug-name">{{ drug.trade_name }}</h3>
+                    {% if drug.inn %}
+                    <span class="drug-inn">{{ drug.inn }}</span>
+                    {% endif %}
+                </div>
+                <div class="drug-badges">
+                    {% if drug.legal_details and drug.legal_details.badge %}
+                    <span class="badge badge--{{ drug.legal_details.badge.color }}">
+                        {{ drug.legal_details.badge.label }}
+                    </span>
+                    {% endif %}
+                    <span class="badge badge--source badge--{{ drug.source }}">
+                        {{ 'UA' if drug.source == 'ua' else 'FDA' }}
+                    </span>
+                </div>
+                <span class="expand-icon">+</span>
+            </div>
+            <div class="drug-details">
+                <table class="details-table">
+                    {% if drug.atc_code %}
+                    <tr>
+                        <th>ATC код:</th>
+                        <td>{{ drug.atc_code }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if drug.dispensing %}
+                    <tr>
+                        <th>Вiдпуск:</th>
+                        <td>{{ drug.dispensing }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if drug.reg_number %}
+                    <tr>
+                        <th>Реєстрацiя:</th>
+                        <td>{{ drug.reg_number }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if drug.status %}
+                    <tr>
+                        <th>Статус:</th>
+                        <td>{{ drug.status }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if drug.indications %}
+                    <tr>
+                        <th>Показання:</th>
+                        <td class="indications-text">{{ drug.indications[:500] }}{% if drug.indications|length > 500 %}...{% endif %}</td>
+                    </tr>
+                    {% endif %}
+                    {% if drug.legal_details %}
+                    <tr>
+                        <th>Правовий статус:</th>
+                        <td>{{ drug.legal_details.reason }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+                {% if drug.inn %}
+                <div class="drug-actions">
+                    <a href="{{ url_for('search.search', q=drug.inn, mode='ingredient') }}" class="action-link">
+                        Знайти аналоги за INN
+                    </a>
+                    <a href="{{ url_for('api.api_similar', name=drug.trade_name) }}" class="action-link" onclick="showSimilarDrugs(event, '{{ drug.trade_name }}')">
+                        Схожi назви
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-results">
+        <p>За вашим запитом нiчого не знайдено.</p>
+        <p>Спробуйте:</p>
+        <ul class="no-results-tips">
+            <li>Перевiрити правопис назви</li>
+            <li>Спробувати iншу мову (украïнська/англiйська)</li>
+            <li>Використати МНН (мiжнародну назву) замiсть торгової</li>
+            <li>Обрати iнший режим пошуку</li>
+        </ul>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+
+{# Модальне вiкно для схожих назв #}
+<div id="similar-modal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeSimilarModal()">&times;</span>
+        <h3>Препарати зi схожими назвами</h3>
+        <div id="similar-list"></div>
+    </div>
+</div>
+
+<script>
+function toggleDrugDetails(header) {
+    const card = header.parentElement;
+    const details = card.querySelector('.drug-details');
+    const icon = header.querySelector('.expand-icon');
+
+    if (details.classList.contains('open')) {
+        details.classList.remove('open');
+        icon.textContent = '+';
+    } else {
+        details.classList.add('open');
+        icon.textContent = '-';
+    }
+}
+
+function showSimilarDrugs(event, drugName) {
+    event.preventDefault();
+
+    fetch('/api/similar?name=' + encodeURIComponent(drugName))
+        .then(response => response.json())
+        .then(data => {
+            const modal = document.getElementById('similar-modal');
+            const list = document.getElementById('similar-list');
+
+            if (data.length === 0) {
+                list.innerHTML = '<p>Схожих назв не знайдено.</p>';
+            } else {
+                let html = '<ul class="similar-drugs-list">';
+                data.forEach(item => {
+                    html += '<li>';
+                    html += '<a href="/search?q=' + encodeURIComponent(item.name) + '&mode=name">' + item.name + '</a>';
+                    html += ' <span class="similarity-badge">схожiсть: ' + item.similarity + '%</span>';
+                    html += '</li>';
+                });
+                html += '</ul>';
+                html += '<p class="modal-warning">Увага! Переконайтесь, що ви обрали правильний препарат.</p>';
+                list.innerHTML = html;
+            }
+
+            modal.classList.add('open');
+        })
+        .catch(error => {
+            console.error('Помилка:', error);
+        });
+}
+
+function closeSimilarModal() {
+    document.getElementById('similar-modal').classList.remove('open');
+}
+
+// Закриття модального вiкна при клiку поза ним
+document.getElementById('similar-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeSimilarModal();
+    }
+});
+</script>
+{% endblock %}
