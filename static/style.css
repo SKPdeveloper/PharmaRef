@@ -124,6 +124,24 @@ body {
     color: #ffffff;
 }
 
+.nav .help-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.nav .help-link:hover {
+    background: var(--color-secondary);
+    transform: scale(1.1);
+}
+
 /* Основний контент */
 .main {
     flex: 1;

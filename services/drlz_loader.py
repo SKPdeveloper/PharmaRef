@@ -13,22 +13,17 @@ from config import Config
 from services.db import get_db_connection, rebuild_fts_index
 
 
-# Маппiнг колонок CSV на поля бази даних
-# Структура CSV може змiнюватися, тому використовуємо гнучкий пiдхiд
-COLUMN_MAPPING = {
-    "Торговельна назва": "trade_name",
-    "Торгова назва": "trade_name",
-    "МНН": "inn",
-    "Код АТС": "atc_code",
-    "Код АТХ": "atc_code",
-    "Умови відпуску": "dispensing",
-    "Умови вiдпуску": "dispensing",
-    "Реєстраційний номер": "reg_number",
-    "Реєстрацiйний номер": "reg_number",
-    "Номер реєстрації": "reg_number",
-    "Стан реєстрації": "status",
-    "Стан реєстрацiї": "status",
-    "Статус": "status",
+# Iндекси колонок в CSV файлi DRLZ (фiксованi)
+# Це надiйнiше нiж пошук за назвою через проблеми з кодуванням
+COLUMN_INDICES = {
+    0: None,           # ID - не потрібен
+    1: "trade_name",   # Торгiвельне найменування
+    2: "inn",          # Мiжнародне непатентоване найменування
+    3: None,           # Форма випуску
+    4: "dispensing",   # Умови вiдпуску
+    5: None,           # Склад (доза)
+    6: "reg_number",   # Реєстрацiйне посвiдчення
+    32: "atc_code",    # Код АТС
 }
 
 
@@ -51,39 +46,41 @@ def parse_drlz_csv(csv_content: str) -> Generator[dict, None, None]:
     """
     Парсинг CSV контенту DRLZ.
     Генератор повертає словники з даними лiкiв.
+    Використовує iндекси колонок для надiйностi.
     """
-    reader = csv.DictReader(
+    reader = csv.reader(
         io.StringIO(csv_content),
         delimiter=Config.DRLZ_DELIMITER
     )
 
-    # Визначаємо вiдповiднiсть колонок
-    field_map = {}
-    if reader.fieldnames:
-        for csv_col in reader.fieldnames:
-            csv_col_clean = csv_col.strip()
-            for pattern, field in COLUMN_MAPPING.items():
-                if pattern.lower() in csv_col_clean.lower():
-                    field_map[csv_col] = field
-                    break
+    # Пропускаємо заголовок
+    try:
+        next(reader)
+    except StopIteration:
+        return
 
     for row in reader:
+        if not row or len(row) < 5:
+            continue
+
         drug = {
             "source": "ua",
             "trade_name": None,
             "inn": None,
             "atc_code": None,
-            "indications": None,  # DRLZ не мiстить показань
+            "indications": None,
             "dispensing": None,
             "reg_number": None,
-            "status": None,
+            "status": "active",  # Все що в реєстрi - активне
             "fda_set_id": None,
         }
 
-        for csv_col, db_field in field_map.items():
-            value = row.get(csv_col, "").strip()
-            if value:
-                drug[db_field] = value
+        # Витягуємо данi за iндексами
+        for idx, field in COLUMN_INDICES.items():
+            if field and idx < len(row):
+                value = row[idx].strip().strip('"')
+                if value:
+                    drug[field] = value
 
         # Пропускаємо записи без торговельної назви
         if drug["trade_name"]:

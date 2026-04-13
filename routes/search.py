@@ -3,11 +3,22 @@
 """
 
 from flask import Blueprint, render_template, request
+from pathlib import Path
 
 from services.search_service import get_search_service
 
 
 search_bp = Blueprint("search", __name__)
+
+
+@search_bp.route("/guide")
+def guide():
+    """Сторiнка довiдки."""
+    guide_path = Path(__file__).parent.parent / "docs" / "GUIDE.md"
+    content = ""
+    if guide_path.exists():
+        content = guide_path.read_text(encoding="utf-8")
+    return render_template("guide.html", content=content)
 
 
 @search_bp.route("/")

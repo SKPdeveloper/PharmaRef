@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+
+{% block title %}Довiдка{% endblock %}
+
+{% block head %}
+<style>
+    .guide-content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        line-height: 1.8;
+    }
+
+    .guide-content h1 {
+        color: var(--primary);
+        border-bottom: 2px solid var(--primary);
+        padding-bottom: 0.5rem;
+        margin-top: 2rem;
+    }
+
+    .guide-content h2 {
+        color: var(--primary);
+        margin-top: 2rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .guide-content h3 {
+        color: var(--secondary);
+        margin-top: 1.5rem;
+    }
+
+    .guide-content pre {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1rem;
+        overflow-x: auto;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.85rem;
+    }
+
+    .guide-content code {
+        background: var(--bg-card);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9em;
+    }
+
+    .guide-content pre code {
+        background: transparent;
+        padding: 0;
+    }
+
+    .guide-content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+    }
+
+    .guide-content th,
+    .guide-content td {
+        border: 1px solid var(--border);
+        padding: 0.75rem;
+        text-align: left;
+    }
+
+    .guide-content th {
+        background: var(--bg-card);
+        font-weight: 600;
+    }
+
+    .guide-content tr:nth-child(even) {
+        background: var(--bg-input);
+    }
+
+    .guide-content blockquote {
+        border-left: 4px solid var(--primary);
+        margin: 1rem 0;
+        padding-left: 1rem;
+        color: var(--text-muted);
+    }
+
+    .guide-content ul, .guide-content ol {
+        margin: 1rem 0;
+        padding-left: 2rem;
+    }
+
+    .guide-content li {
+        margin: 0.5rem 0;
+    }
+
+    .guide-content hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 2rem 0;
+    }
+
+    .guide-content a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .guide-content a:hover {
+        text-decoration: underline;
+    }
+
+    .toc {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .toc h4 {
+        margin: 0 0 1rem;
+        color: var(--primary);
+    }
+
+    .toc ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .toc li {
+        margin: 0.3rem 0;
+    }
+
+    .toc a {
+        color: var(--text);
+        text-decoration: none;
+    }
+
+    .toc a:hover {
+        color: var(--primary);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="guide-content">
+    <div class="toc">
+        <h4>Змiст</h4>
+        <ul>
+            <li><a href="#overview">Огляд проєкту</a></li>
+            <li><a href="#search-modes">Режими пошуку</a></li>
+            <li><a href="#ai-service">AI сервiс</a></li>
+            <li><a href="#legal-status">Правовий статус</a></li>
+            <li><a href="#api">API Reference</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+        </ul>
+    </div>
+
+    <h1 id="overview">PharmaRef - Довiдник лiкарських засобiв</h1>
+
+    <p>PharmaRef - веб-додаток для пошуку iнформацiї про лiкарськi засоби України та США.</p>
+
+    <h3>Ключовi особливостi</h3>
+    <ul>
+        <li><strong>Три режими пошуку</strong> - за назвою, захворюванням, iнгредiєнтом</li>
+        <li><strong>AI-аналiз</strong> - автоматичний fallback мiж Groq/OpenRouter/Gemini</li>
+        <li><strong>Правовий статус</strong> - визначення контрольованих речовин (UA/USA)</li>
+        <li><strong>Транслiтерацiя</strong> - пошук кирилицею та латиницею</li>
+        <li><strong>16,000+ препаратiв</strong> - база DRLZ України + FDA США</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="search-modes">Режими пошуку</h2>
+
+    <h3>F-01: Пошук за назвою</h3>
+    <p>Шукає за торговою назвою та МНН (мiжнародна непатентована назва).</p>
+    <pre><code>GET /api/search?q=парацетамол&mode=name</code></pre>
+
+    <h3>F-02: Пошук за захворюванням</h3>
+    <p>AI визначає препарати для лiкування захворювання.</p>
+    <pre><code>GET /api/search?q=головний бiль&mode=disease</code></pre>
+
+    <h3>F-03: Пошук за iнгредiєнтом</h3>
+    <p>Всi препарати з вказаною дiючою речовиною (INN).</p>
+    <pre><code>GET /api/search?q=ibuprofen&mode=ingredient</code></pre>
+
+    <hr>
+
+    <h2 id="ai-service">AI сервiс</h2>
+
+    <h3>Мульти-провайдер архiтектура</h3>
+    <p>Автоматичний fallback: <strong>Groq</strong> -> <strong>OpenRouter</strong> -> <strong>Gemini</strong></p>
+
+    <table>
+        <tr>
+            <th>Провайдер</th>
+            <th>Моделi</th>
+            <th>Лiмiти (free tier)</th>
+        </tr>
+        <tr>
+            <td>Groq</td>
+            <td>llama-3.1-8b-instant</td>
+            <td>14,400 req/day</td>
+        </tr>
+        <tr>
+            <td>OpenRouter</td>
+            <td>llama-3.3-70b:free</td>
+            <td>50 req/day</td>
+        </tr>
+        <tr>
+            <td>Gemini</td>
+            <td>gemini-2.5-flash-lite</td>
+            <td>1,000 req/day</td>
+        </tr>
+    </table>
+
+    <h3>AI функцiї</h3>
+    <ul>
+        <li><strong>analyze_query</strong> - виправлення помилок, визначення типу запиту</li>
+        <li><strong>analyze_results</strong> - попередження, взаємодiї, рекомендацiї</li>
+        <li><strong>translate_disease</strong> - переклад захворювань, визначення ATC кодiв</li>
+        <li><strong>explain_drug</strong> - пояснення препарату простою мовою</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="legal-status">Правовий статус</h2>
+
+    <table>
+        <tr>
+            <th>Статус</th>
+            <th>Опис</th>
+        </tr>
+        <tr>
+            <td style="color: #dc2626;">forbidden_ua</td>
+            <td>Заборонено в Українi (Таблиця I КМУ №770)</td>
+        </tr>
+        <tr>
+            <td style="color: #ea580c;">restricted_ua</td>
+            <td>Обмежений обiг (Таблиця II) - рецептурний</td>
+        </tr>
+        <tr>
+            <td style="color: #ca8a04;">precursor</td>
+            <td>Прекурсор (Таблиця III)</td>
+        </tr>
+        <tr>
+            <td style="color: #2563eb;">prescription</td>
+            <td>Рецептурний препарат</td>
+        </tr>
+        <tr>
+            <td style="color: #16a34a;">otc</td>
+            <td>Безрецептурний</td>
+        </tr>
+    </table>
+
+    <h3>Контрольованi речовини (приклади)</h3>
+    <ul>
+        <li><strong>Таблиця I</strong> (заборонено): героїн, LSD, MDMA, канабiс</li>
+        <li><strong>Таблиця II</strong> (обмежено): морфiн, кодеїн, трамадол, дiазепам</li>
+        <li><strong>Таблиця III</strong> (прекурсори): ефедрин, псевдоефедрин</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="api">API Reference</h2>
+
+    <table>
+        <tr>
+            <th>Метод</th>
+            <th>URL</th>
+            <th>Опис</th>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/api/search</td>
+            <td>Пошук (q, mode, limit)</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/api/suggest</td>
+            <td>Автодоповнення</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/api/analogs</td>
+            <td>Пошук аналогiв (inn/atc)</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/api/status</td>
+            <td>Правовий статус речовини</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/api/ai/status</td>
+            <td>Статус AI сервiсу</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/api/db/info</td>
+            <td>Iнформацiя про БД</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <h3>AI не працює</h3>
+    <ol>
+        <li>Перевiрте <code>/api/ai/status</code></li>
+        <li>Перевiрте наявнiсть ключiв в <code>.env</code></li>
+        <li>Перевiрте логи на помилки 429/403</li>
+    </ol>
+
+    <h3>Пошук не дає результатiв</h3>
+    <ol>
+        <li>Перевiрте кiлькiсть записiв: <code>/api/db/info</code></li>
+        <li>Спробуйте iншу транслiтерацiю (кирилиця/латиниця)</li>
+        <li>Використайте mode=ingredient для пошуку за INN</li>
+    </ol>
+
+    <h3>Помилка 503</h3>
+    <p>AI сервiс тимчасово недоступний. Система автоматично перемикається на iнший провайдер.</p>
+
+    <hr>
+
+    <p style="text-align: center; color: var(--text-muted);">
+        PharmaRef v1.0 | MIT License
+    </p>
+</div>
+{% endblock %}

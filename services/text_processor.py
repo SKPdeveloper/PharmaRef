@@ -64,6 +64,53 @@ LATIN_TO_CYRILLIC_VARIANTS = {
     'z': ['з', 'ц'],
 }
 
+# Вiдомi фармацевтичнi назви та їх транслiтерацiї
+# Для випадкiв коли стандартна транслiтерацiя не працює
+PHARMA_TRANSLATIONS = {
+    # Кирилиця -> латиниця (вiдомi бренди та речовини)
+    'виагра': ['viagra', 'sildenafil'],
+    'вiагра': ['viagra', 'sildenafil'],
+    'ефедрин': ['ephedrine', 'efedrin'],
+    'ефедрін': ['ephedrine', 'efedrin'],
+    'парацетамол': ['paracetamol', 'acetaminophen'],
+    'аспiрин': ['aspirin'],
+    'аспірін': ['aspirin'],
+    'аспирин': ['aspirin'],
+    'iбупрофен': ['ibuprofen'],
+    'ібупрофен': ['ibuprofen'],
+    'ибупрофен': ['ibuprofen'],
+    'диклофенак': ['diclofenac'],
+    'амоксицилiн': ['amoxicillin'],
+    'амоксицилін': ['amoxicillin'],
+    'омепразол': ['omeprazole'],
+    'метформiн': ['metformin'],
+    'метформін': ['metformin'],
+    'лоратадин': ['loratadine'],
+    'цетиризин': ['cetirizine'],
+    'сiльденафiл': ['sildenafil'],
+    'сільденафіл': ['sildenafil'],
+    'силденафил': ['sildenafil'],
+    'тадалафiл': ['tadalafil'],
+    'тадалафіл': ['tadalafil'],
+    'морфiн': ['morphine'],
+    'морфін': ['morphine'],
+    'кодеїн': ['codeine'],
+    'кодеин': ['codeine'],
+    'трамадол': ['tramadol'],
+    'фентанiл': ['fentanyl'],
+    'фентаніл': ['fentanyl'],
+    'оксикодон': ['oxycodone'],
+    'метадон': ['methadone'],
+    'героїн': ['heroin'],
+    'героин': ['heroin'],
+    'кокаїн': ['cocaine'],
+    'кокаин': ['cocaine'],
+    'амфетамiн': ['amphetamine'],
+    'амфетамін': ['amphetamine'],
+    'метамфетамiн': ['methamphetamine'],
+    'метамфетамін': ['methamphetamine'],
+}
+
 # Типовi фармацевтичнi суфiкси та їх варiанти
 PHARMA_SUFFIXES = {
     # Латинськi -> можливi кириличнi варiанти
@@ -182,27 +229,46 @@ def get_search_variants(query: str) -> List[str]:
     Генерує всi варiанти пошукового запиту для пошуку в БД.
     Включає оригiнал, транслiтерацiю, та основнi варiацiї.
     """
-    query = normalize_text(query)
-    if not query:
+    query_normalized = normalize_text(query)
+    if not query_normalized:
         return []
 
-    variants = {query}  # set для унiкальностi
+    variants = {query_normalized}
 
-    if is_cyrillic(query):
-        # Кирилиця -> латиниця
-        latin = cyrillic_to_latin(query)
+    # Перевiряємо вiдомi фармацевтичнi назви
+    if query_normalized in PHARMA_TRANSLATIONS:
+        variants.update(PHARMA_TRANSLATIONS[query_normalized])
+
+    if is_cyrillic(query_normalized):
+        # Кирилиця -> латиниця (стандартна транслiтерацiя)
+        latin = cyrillic_to_latin(query_normalized)
         variants.add(latin)
-    elif is_latin(query):
-        # Латиниця -> кирилицi (можуть бути варiанти)
-        cyrillic_variants = latin_to_cyrillic_variants(query)
+
+        # Додатковi варiанти для фармацевтичних назв
+        # "і" може бути "i" або "y"
+        latin_alt = latin.replace('i', 'y')
+        if latin_alt != latin:
+            variants.add(latin_alt)
+
+        # "ф" може бути "f" або "ph"
+        latin_ph = latin.replace('f', 'ph')
+        if latin_ph != latin:
+            variants.add(latin_ph)
+
+    elif is_latin(query_normalized):
+        # Латиниця -> кирилицi
+        cyrillic_variants = latin_to_cyrillic_variants(query_normalized)
         variants.update(cyrillic_variants)
 
-    # Додаємо варiанти без подвоєних букв (часта помилка)
+    # Варiанти без подвоєних букв
     for v in list(variants):
-        # aspirin -> asprin (пропущена буква)
         no_double = re.sub(r'(.)\1', r'\1', v)
         if no_double != v:
             variants.add(no_double)
+
+    # Верхнiй регiстр (DRLZ зберiгає у верхньому)
+    for v in list(variants):
+        variants.add(v.upper())
 
     return list(variants)
 
